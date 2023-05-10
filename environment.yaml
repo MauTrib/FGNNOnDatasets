@@ -1,4 +1,4 @@
-name: gnncpu
+name: fod
 channels:
   - dglteam
   - pytorch
