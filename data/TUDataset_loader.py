@@ -4,6 +4,8 @@ import pandas as pd
 import pickle
 import os
 
+from utils import check_dir
+
 
 def load_adj(adj_path):
     """Loads the adjacency matrix from the file and returns it as a dgl graph."""
@@ -61,6 +63,7 @@ def unbatch(graph, gi):
 
 
 def save_graphs(graphs, path):
+    check_dir(path)
     with open(path, "wb") as f:
         pickle.dump(graphs, f)
 
