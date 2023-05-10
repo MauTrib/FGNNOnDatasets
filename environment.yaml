@@ -1,0 +1,19 @@
+name: gnncpu
+channels:
+  - dglteam
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - networkx=2.8.4
+  - numpy=1.23.5
+  - pandas=1.5.3
+  - pip
+  - python=3.10.10
+  - pytorch=2.0.0
+  - pytorch-lightning=2.0.2
+  - scikit-learn=1.2.2
+  - scipy=1.10.0
+  - yaml=0.2.5=h7b6447c_0
+  - pip:
+      - wandb==0.14.0
