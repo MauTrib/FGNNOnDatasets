@@ -4,7 +4,7 @@ import pandas as pd
 import pickle
 import os
 
-from utils import check_dir
+from utils import check_file
 
 
 def load_adj(adj_path):
@@ -63,7 +63,7 @@ def unbatch(graph, gi):
 
 
 def save_graphs(graphs, path):
-    check_dir(path)
+    check_file(path)
     with open(path, "wb") as f:
         pickle.dump(graphs, f)
 

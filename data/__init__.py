@@ -33,11 +33,12 @@ def split_data(data, config):
         train_split = 1
         val_split = 1
         test_split = len(data) - train_split - val_split
-        print(
-            f"Testing, splits are : {train_split}, {val_split}, {test_split}, total : {train_split+val_split+test_split} ({len(data)})"
-        )
     data_train, data_val, data_test = torch.utils.data.random_split(
         data, [train_split, val_split, test_split]
+    )
+
+    print(
+        f"Splits (train/val/test) are : {len(data_train)}, {len(data_val)}, {len(data_test)}, total : {len(data_train) + len(data_val) + len(data_test)} ({len(data)})"
     )
     return data_train, data_val, data_test
 
