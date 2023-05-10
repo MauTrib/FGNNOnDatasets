@@ -70,7 +70,7 @@ def train(config, test=False):
     trainer.fit(pipeline, data_train, data_val)
 
     if test:
-        trainer.test(ckpt_path="best", test_dataloaders=data_test)
+        trainer.test(ckpt_path="best", dataloaders=data_test)
 
 
 def test_only(config):
