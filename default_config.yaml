@@ -1,0 +1,31 @@
+#Yaml file containing the default configuration for execution
+project: test
+device: cpu
+problem: proteins
+
+train:
+  max_epochs: 1000
+  batch_size: 1 #For now RSFGNNs don't work with batch_size > 1
+  epochs: 100
+  train_split: 0.7 # Test split will be 1 - train_split - val_split
+  val_split: 0.2 # Test split will be 1 - train_split - val_split
+  optim:
+    lr: !!float 1e-4
+    scheduler_patience: 10
+    scheduler_factor: 0.5
+    scheduler_min_lr: !!float 1e-7
+    scheduler_monitor: val_loss
+
+
+model:
+  pipeline: rsfgnn
+  name: rsfgnn
+  embedding: graph
+  params:
+    rsfgnn: # Path: rsfgnn.py
+      num_blocks: 2
+      original_features_num: 3
+      in_features: 64
+      out_features: 64
+      depth_of_mlp: 3
+      input_embed: Yes #To remove for non-binary inputs
