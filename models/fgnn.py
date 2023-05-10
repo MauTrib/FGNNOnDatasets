@@ -54,7 +54,7 @@ class RSFGNN(GNN_Abstract_Base_Class):
         x = self(g.unsqueeze(0)).squeeze(0)
         loss = self.loss(x, target)
         self.log("train_loss", loss, batch_size=1, on_epoch=True)
-        accuracy = Accuracy("binary")
+        accuracy = Accuracy("binary").to(x.device)
         acc = accuracy(x, target)
         self.log("train_acc", acc, batch_size=1, on_epoch=True)
         return loss
@@ -64,7 +64,7 @@ class RSFGNN(GNN_Abstract_Base_Class):
         x = self(g.unsqueeze(0)).squeeze(0)
         loss = self.loss(x, target)
         self.log("val_loss", loss, batch_size=1, on_epoch=True)
-        accuracy = Accuracy("binary")
+        accuracy = Accuracy("binary").to(x.device)
         acc = accuracy(x, target)
         self.log("val_acc", acc, batch_size=1, on_epoch=True)
         return loss
@@ -74,7 +74,7 @@ class RSFGNN(GNN_Abstract_Base_Class):
         x = self(g.unsqueeze(0)).squeeze(0)
         loss = self.loss(x, target)
         self.log("test_loss", loss, batch_size=1, on_epoch=True)
-        accuracy = Accuracy("binary")
+        accuracy = Accuracy("binary").to(x.device)
         acc = accuracy(x, target)
         self.log("test_acc", acc, batch_size=1, on_epoch=True)
         return loss
