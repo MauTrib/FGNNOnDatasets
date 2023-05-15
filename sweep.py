@@ -22,9 +22,14 @@ def change_config(config, sweep_config):
 
 def sweep(config, sweep_config):
     """This function creates a W&B sweep and launches it."""
-
-    # Create the sweep
-    sweep_id = wandb.sweep(sweep_config, project=config["project"] + "-sweep")
+    sweep_project = config["project"] + "-sweep"
+    if sweep_config["sweep_anew"]:
+        # Create the sweep
+        sweep_id = wandb.sweep(sweep_config, project=sweep_project)
+        print(f"Created sweep {sweep_id}")
+    else:
+        sweep_id = sweep_config["sweep_id"]
+        print(f"Loading sweep {sweep_project}/{sweep_id}")
 
     def train_sweep(config):
         from commander import train
@@ -34,7 +39,11 @@ def sweep(config, sweep_config):
         train(changed_config)
 
     # Launch the sweep agent
-    wandb.agent(sweep_id, function=lambda: train_sweep(config))
+    wandb.agent(
+        sweep_id,
+        project=sweep_project,
+        function=lambda: train_sweep(config),
+    )
 
 
 def main():
