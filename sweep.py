@@ -2,6 +2,8 @@ import wandb
 import argparse
 import yaml
 
+# This file is used to create a sweep on W&B. It can be used as is, and can also be called by the commander.py file.
+
 
 def change_config(config, sweep_config):
     """This function takes all keys from the sweep_config and changes the config accordingly.
@@ -36,7 +38,7 @@ def sweep(config, sweep_config):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Main commander for this project.")
+    parser = argparse.ArgumentParser(description="W&B sweeping file.")
     parser.add_argument(
         "--config",
         type=str,
