@@ -4,6 +4,7 @@ import pytorch_lightning as pl
 
 from data import get_loaders
 from models import configure_pipeline
+from sweep import sweep
 import utils
 
 """Main code. This is the entry point of the program. It parses the command line arguments and calls the appropriate functions.
@@ -86,7 +87,7 @@ def main():
     parser.add_argument(
         "command",
         type=str,
-        choices=["train", "test", "traintest"],
+        choices=["train", "test", "traintest", "sweep"],
         help="Command to execute. Can be [train, test]",
     )
     parser.add_argument(
@@ -96,6 +97,12 @@ def main():
         help="Path to the config file.",
     )
     parser.add_argument("--seed", type=int, default=1922409, help="random seed")
+    parser.add_argument(
+        "--sweepconfig",
+        type=str,
+        default="sweep_config.yaml",
+        help="Path to the sweep config file.",
+    )
 
     args = parser.parse_args()
 
@@ -105,12 +112,22 @@ def main():
     with open(args.config, "r") as f:
         config = yaml.safe_load(f)
 
+    try:
+        with open(args.sweepconfig, "r") as f:
+            sweepconfig = yaml.safe_load(f)
+    except FileNotFoundError as fe:
+        if args.command == "sweep":
+            raise fe
+
     if args.command[:5] == "train":
         print("Training...")
         train(config, test=(args.command == "traintest"))
-    if args.command == "test":
+    elif args.command == "test":
         print("Testing...")
         test_only(config)
+    elif args.command == "sweep":
+        print("Sweeping...")
+        sweep(config, sweepconfig)
 
 
 if __name__ == "__main__":
